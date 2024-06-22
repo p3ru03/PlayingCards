@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HighLowSceneDirector : MonoBehaviour
@@ -91,6 +92,7 @@ public class HighLowSceneDirector : MonoBehaviour
             {
                 winCount++;
                 result = "WIN!! : ";
+                GetComponent<AudioSource>().Play();
             }
         }
         //LOWを選んだ
@@ -100,6 +102,7 @@ public class HighLowSceneDirector : MonoBehaviour
             {
                 winCount++;
                 result = "WIN!! : ";
+                GetComponent<AudioSource>().Play();
             }
         }
 
@@ -113,20 +116,30 @@ public class HighLowSceneDirector : MonoBehaviour
     //次のゲーム
     IEnumerator nextCards()
     {
+        //指定秒数待つ
         yield return new WaitForSeconds(NextWaitTimer);
 
+        //前回のカードを片づける
         cards[cardIndex].gameObject.SetActive(false);
-        cards[cardIndex+1].gameObject.SetActive(false);
+        cards[cardIndex + 1].gameObject.SetActive(false);
 
+        //次のカードの一枚目
         cardIndex += 2;
 
+        //カードが足りない
         if (cards.Count - 1 <= cardIndex)
         {
             textInfo.text = "終了!! " + winCount;
         }
+        //次のゲーム
         else
         {
             dealCards();
         }
+    }
+
+    public void OnClickRestart()
+    {
+        SceneManager.LoadScene("HighLowScene");
     }
 }

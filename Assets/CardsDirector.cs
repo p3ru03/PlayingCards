@@ -37,6 +37,22 @@ public class CardsDirector : MonoBehaviour
 
         return ret;
     }
+
+    //シャッフルしたカードを返す
+    public List<CardController> GetShuffleCards()
+    {
+        List<CardController> ret = new List<CardController>();
+
+        ret.AddRange(createCards(SuitType.Spade));
+        ret.AddRange(createCards(SuitType.Club));
+        ret.AddRange(createCards(SuitType.Diamond));
+        ret.AddRange(createCards(SuitType.Heart));
+
+        ShuffleCards(ret);
+
+        return ret;
+    }
+
     //シャッフル
     public void ShuffleCards(List<CardController> cards)
     {
